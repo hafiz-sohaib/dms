@@ -1,0 +1,13 @@
+<%- include('../../../layout/header'); %>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title mb-4">Profile Details</h4>
+        <p class="card-text mb-1"><strong>Full Name:</strong> &nbsp; <%= user.full_name %></p>
+        <p class="card-text mb-1"><strong>Email:</strong> &nbsp; <%= user.email %></p>
+        <p class="card-text"><strong>Status:</strong> &nbsp; <%= user.role %></p>
+    </div>
+</div>
+
+<%- include('../../../layout/footer'); %>
+<script src="/pages/admin/profile/profile.js"></script>

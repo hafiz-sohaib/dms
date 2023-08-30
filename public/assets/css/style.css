@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap');
+
+:root{
+    --primary-900: #004d40;
+    --primary-800: #00695c;
+    --primary-700: #00796b;
+    --primary-600: #00897b;
+    --primary-500: #009688;
+    --primary-400: #26a69a;
+    --primary-300: #4db6ac;
+    --primary-200: #80cbc4;
+    --primary-100: #b2dfdb;
+    --primary-50: #e0f2f1;
+}
+
+::-webkit-scrollbar{
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-thumb{
+    background: rgb(160, 160, 160);
+    border-radius: 30px;
+}
+
+a{
+    text-decoration: none;
+    font-family: 'Nunito', sans-serif;
+}
+
+main{
+    width: 100%;
+    height: 100vh;
+    padding: 10px 0;
+}
+
+main > .container,
+main > .container-fluid,
+main > .container-fluid > .row,
+main > .container-fluid > .row > div {
+    height: 100%;
+}
+
+input.form-control,
+textarea.form-control,
+select.form-select {
+    padding: 10px 15px;
+    box-shadow: none !important;
+}
+input.form-control:focus,
+textarea.form-control:focus,
+select.form-select:focus {
+    border-color: var(--primary-700);
+}
+input + div.text-danger,
+textarea + div.text-danger,
+select + div.text-danger {
+    font-size: 15px;
+    margin-left: 2px;
+    font-weight: 500;
+    font-style: italic;
+}
+
+button.btn{
+    padding: 10px 15px;
+    font-weight: 600;
+}
+button.btn-primary{
+    background: var(--primary-800);
+    border-color: var(--primary-800);
+}
+button.btn-primary:hover,
+button.btn-primary:focus{
+    background: var(--primary-700);
+    border-color: var(--primary-700);
+}
+
+
+.navigation-badge{
+    color: var(--primary-900);
+    font-size: 17px;
+    font-weight: 400;
+    display: flex;
+    align-items: top;
+    text-transform: capitalize;
+    margin-bottom: 30px;
+}
+.navigation-badge svg{
+    width: 18px;
+    margin: 0 5px;
+}
+
+
+
+/* ===== Sidebar ===== */
+.sidebar{
+    height: 100%;
+    background: var(--primary-900);
+    border-radius: 20px;
+    padding: 30px 20px;
+}
+.sidebar .user-container > a{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.142);
+    padding-bottom: 15px;
+}
+.sidebar .user-container > a::after{
+    display: none;
+}
+.sidebar .user-container img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+}
+.sidebar .user-container h3{
+    font-size: 20px;
+    margin-left: 15px;
+    color: white;
+}
+
+.sidebar .menu-links > a{
+    display: flex;
+    padding: 15px 20px;
+    margin-bottom: 5px;
+    font-size: 19px;
+    font-weight: 600;
+    color: white;
+    border-radius: 10px;
+    align-items: center;
+}
+.sidebar .menu-links > a:hover{
+    background: rgba(0, 0, 0, 0.20);
+}
+.sidebar .menu-links > a.active{
+    background: var(--primary-700);
+    font-weight: 700;
+}
+
+.sidebar .menu-links > a svg{
+    width: 25px;
+    margin-top: -3px;
+    margin-right: 10px;
+}
+
+.main-content{
+    height: 100%;
+    overflow: auto;
+}
+
+#display_students svg,
+#display_teachers svg{
+    width: 23px;
+    color: var(--primary-600);
+}
+.table > :not(caption) > * > * {
+    padding: 0.8rem 0.5rem;
+}
+
+tbody > tr > td > a > svg {
+    width: 25px;
+    color: var(--primary-600);
+}

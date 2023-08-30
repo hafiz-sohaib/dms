@@ -1,0 +1,86 @@
+<%- include('../../../layout/header') %>
+
+<div class="card mb-5 shadow-sm">
+    <div class="card-body">
+        <form id="teacher_form">
+            <h5 class="mb-4">Add Teacher</h5>
+            <div class="mb-3">
+                <input type="hidden" name="teacher_id" />
+                <input type="text" name="teacher_name" class="form-control" placeholder="Teacher Name" />
+                <div class="text-danger" id="teacher_name_error"></div>
+            </div>
+            <div class="mb-3">
+                <input type="text" name="teacher_email" class="form-control" placeholder="Teacher Email" />
+                <div class="text-danger" id="teacher_email_error"></div>
+            </div>
+            <div class="mb-3">
+                <input type="text" name="teacher_phone" class="form-control" placeholder="Teacher Phone" />
+                <div class="text-danger" id="teacher_phone_error"></div>
+            </div>
+            <div class="mb-3">
+                <input type="text" name="teacher_cnic" class="form-control" placeholder="Teacher CNIC#" />
+                <div class="text-danger" id="teacher_cnic_error"></div>
+            </div>
+            <div class="mb-3">
+                <select name="teacher_scale" class="form-select">
+                    <option value="Assosiate Professor">Assosiate Professor</option>
+                    <option value="Professor">Professor</option>
+                    <option value="Engineer">Engineer</option>
+                </select>
+                <div class="text-danger" id="teacher_scale_error"></div>
+            </div>
+            <div class="mb-4">
+                <select name="teacher_qualification" class="form-select">
+                    <option value="Masters">Masters</option>
+                    <option value="PhD">PhD</option>
+                </select>
+                <div class="text-danger" id="teacher_qualification_error"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Teacher</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between mb-5">
+            <h5 class="card-title">Show Teachers</h5>
+            <input type="text" id="search_teacher" class="form-control" style="width: 300px;" placeholder="Search..." />
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="text-center">
+                        <th>#</th>
+                        <th>Teacher Name</th>
+                        <th>Teacher Email</th>
+                        <th>Teacher Phone</th>
+                        <th>Teacher CNIC</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider" id="display_teachers"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="success_toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <rect width="100%" height="100%" fill="#00695c"></rect>
+            </svg>
+            <strong class="me-auto">Message</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body"></div>
+    </div>
+</div>
+
+
+<%- include('../../../layout/footer') %>
+<script src="/pages/admin/manage-teacher/manage-teacher.js"></script>
