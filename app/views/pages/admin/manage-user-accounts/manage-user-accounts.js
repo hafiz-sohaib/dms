@@ -111,7 +111,7 @@ async function get_users(query = "") {
                     <td>${index+1}</td>
                     <td>${user.full_name}</td>
                     <td>${user.email}</td>
-                    <td>Student</td>
+                    <td>Teacher</td>
                     <td>`;
 
                         if (user.isBlocked === true) {

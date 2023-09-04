@@ -151,6 +151,7 @@ button.btn-primary:focus{
 }
 
 #display_students svg,
+#display_teachers svg,
 #display_teachers svg{
     width: 23px;
     color: var(--primary-600);

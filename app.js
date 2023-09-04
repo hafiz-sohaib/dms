@@ -42,7 +42,11 @@ app.use(process.env.API_PREFIX, [
 	require('./app/api/student/endpoints'),
 	require('./app/api/teacher/endpoints'),
 	require('./app/api/notice/endpoints'),
-	require('./app/api/exam-duties/endpoints')
+	require('./app/api/exam-duties/endpoints'),
+	require('./app/api/notification/endpoints'),
+	require('./app/api/notes/endpoints'),
+	require('./app/api/opportunities/endpoints'),
+	require('./app/api/chat/endpoints'),
 ]);
 
 

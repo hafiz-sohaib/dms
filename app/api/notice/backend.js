@@ -9,14 +9,16 @@ exports.upload_notice = async (request, response) => {
         const notice = await Notices.create(request.body);
 
         if (notice.notice_roll === "for-students") {
+            console.log('ok st');
             emit_notice('student-notice-alert', "New Notification");
-        }else if (notice.notice_roll === "for-teahcers") {
+            response.json({message: "Notice Uploaded For Students", status: "success"});
+        }else if (notice.notice_roll === "for-teachers") {
             emit_notice('teacher-notice-alert', "New Notification");
+            response.json({message: "Notice Uploaded For Teachers", status: "success"});
         }else if (notice.notice_roll === "for-everyone") {
             emit_notice('everyone-notice-alert', "New Notification");
+            response.json({message: "Notice Uploaded For Everyone", status: "success"});
         }
-
-        response.json({message: "Notice Successfully Uploaded", status: "success"});
     } catch (error) {
         console.log(error);
         const errors = errorHandler(error, 'notices');

@@ -25,9 +25,11 @@ exports.errorHandler = (error, model_name) => {
 
 
 
+
 exports.generateToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: '1d'});
 }
+
 
 
 
@@ -50,8 +52,7 @@ exports.sendEmail = async (data, request, response) => {
 
 
 
-
-exports.upload_file = async (field_name, destination) => {
+exports.upload_file = (field_name, destination) => {
     const storage = multer.diskStorage({
         destination: `storage/${destination}/`,
         filename: (request, file, callback) => {

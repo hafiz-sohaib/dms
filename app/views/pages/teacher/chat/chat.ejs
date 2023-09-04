@@ -1,0 +1,71 @@
+<%- include('../../../layout/header') %>
+
+
+<style>
+
+.listed-user{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+    padding: 5px 15px;
+}
+.listed-user:hover, .listed-user.active{
+    background: var(--bs-success);
+    color: white;
+}
+.listed-user img{
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.listed-user p{
+    font-size: 18px;
+}
+
+.row{
+    height: 600px;
+}
+.row .col-lg-3,
+.row .col-lg-9,
+.row .col-lg-9 .card{
+    height: 100%;
+}
+
+.row .col-lg-9 .card #message_container{
+    height: 80%;
+    overflow-y: auto;
+}
+
+</style>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body" id="chat_users"></div>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="card chat-container">
+                <div class="card-body">
+                    <h4 class="card-title mb-4">Title</h4>
+                    <div id="message_container"></div>
+                    <form id="chat_form" class="d-flex">
+                        <input type="hidden" name="sender_id" value="<%= user._id %>" />
+                        <input type="hidden" name="reciever_id" />
+                        <input type="text" name="message" class="form-control me-3" required />
+                        <button type="submit" class="btn btn-success px-5">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../../../layout/footer') %>
+<script src="/assets/teacher/js/script.js"></script>
+<script src="/pages/teacher/chat/chat.js"></script>

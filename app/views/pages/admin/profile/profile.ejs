@@ -5,7 +5,12 @@
         <h4 class="card-title mb-4">Profile Details</h4>
         <p class="card-text mb-1"><strong>Full Name:</strong> &nbsp; <%= user.full_name %></p>
         <p class="card-text mb-1"><strong>Email:</strong> &nbsp; <%= user.email %></p>
-        <p class="card-text"><strong>Status:</strong> &nbsp; <%= user.role %></p>
+        <p class="card-text"><strong>Status:</strong>
+            &nbsp;&nbsp;&nbsp;
+            <% if (user.role.includes("admin")) { %>
+                Admin
+            <% } %>
+        </p>
     </div>
 </div>
 
