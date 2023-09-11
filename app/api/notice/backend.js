@@ -9,7 +9,6 @@ exports.upload_notice = async (request, response) => {
         const notice = await Notices.create(request.body);
 
         if (notice.notice_roll === "for-students") {
-            console.log('ok st');
             emit_notice('student-notice-alert', "New Notification");
             response.json({message: "Notice Uploaded For Students", status: "success"});
         }else if (notice.notice_roll === "for-teachers") {

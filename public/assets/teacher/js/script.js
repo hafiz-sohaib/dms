@@ -1,7 +1,10 @@
-const current_user_id = document.getElementById('current_user_id').value;
+const user_id = $('#user_id').val();
+let receiver_id;
+let group_id;
+
 
 const socket = io({
-    auth: { token: current_user_id }
+    auth: { token: user_id }
 });
 
 

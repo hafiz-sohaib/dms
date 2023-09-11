@@ -6,7 +6,8 @@ const router = Router();
 
 const upload = upload_file("notes_file", "notes");
 
-router.post('/notes', isLoggedin, isTeacher, upload, controller.upload_notes);
+router.post('/notes', isLoggedin, upload, controller.upload_notes);
 router.get('/notes', controller.get_notes);
+router.get('/notes/download/:fileName', isLoggedin, controller.download_notes);
 
 module.exports = router;

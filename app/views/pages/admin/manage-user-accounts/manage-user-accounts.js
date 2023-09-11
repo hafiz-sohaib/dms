@@ -10,20 +10,20 @@ async function get_emails() {
     const student_emails = await $.get("/api/v1/student");
     const teacher_emails = await $.get("/api/v1/teacher");
 
-    if (student_emails.students.length > 0) {
+    // if (student_emails.students.length > 0) {
         student_emails.students.map(student => {
             output += `<option value="${student.student_email}">${student.student_email}</option>`;
         })
 
-        if (teacher_emails.teachers.length > 0) {
-            teacher_emails.teachers.map(teacher => {
-                output += `<option value="${teacher.teacher_email}">${teacher.teacher_email}</option>`;
-            })
-        }
+        // if (teacher_emails.teachers.length > 0) {
+        teacher_emails.teachers.map(teacher => {
+            output += `<option value="${teacher.teacher_email}">${teacher.teacher_email}</option>`;
+        })
+        // }
 
-    } else {
-        output += `<option>No Email Found</option>`;
-    }
+    // } else {
+    //     output += `<option>No Email Found</option>`;
+    // }
 
     $('[name="email"]').removeAttr('disabled');
     $('[name="email"]').html(output);

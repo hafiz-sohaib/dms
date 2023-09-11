@@ -47,6 +47,7 @@ app.use(process.env.API_PREFIX, [
 	require('./app/api/notes/endpoints'),
 	require('./app/api/opportunities/endpoints'),
 	require('./app/api/chat/endpoints'),
+	require('./app/api/group/endpoints'),
 ]);
 
 

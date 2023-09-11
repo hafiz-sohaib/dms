@@ -10,8 +10,6 @@ app.set('port', port);
 
 const server = http.Server(app);
 init_socket(server);
-// const chat = io.of('/chat');
-
 
 
 server.listen(port);

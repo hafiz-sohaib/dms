@@ -4,7 +4,9 @@ const { Router } = require('express');
 const router = Router();
 
 router.get('/dashboard', isLoggedin, isStudent, controller.dashboard);
-// router.get('/login', controller.login);
-// router.get('/forgot-password', controller.forgot_password);
+router.get('/notes', isLoggedin, isStudent, controller.notes);
+router.get('/opportunities', isLoggedin, isStudent, controller.opportunities);
+router.get('/notice-board', isLoggedin, isStudent, controller.notice_board);
+router.get('/chat', isLoggedin, isStudent, controller.chat);
 
 module.exports = router;

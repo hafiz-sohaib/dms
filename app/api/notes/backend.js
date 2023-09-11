@@ -20,6 +20,22 @@ exports.upload_notes = async (request, response) => {
 
 
 
+// ==================== Download Notes ====================
+exports.download_notes = async (request, response) => {
+    try {
+        const fileName = request.params.fileName;
+        const filePath = `storage/notes/${fileName}`;
+        await response.download(filePath, fileName);
+    } catch (error) {
+        console.log(error);
+        response.json({message: "Something went wrong", status: "error"});
+    }
+}
+
+
+
+
+
 // ==================== Get Notices ====================
 exports.get_notes = async (request, response) => {
     try {

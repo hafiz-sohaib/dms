@@ -36,6 +36,7 @@ const UserSchema = new mongoose.Schema(
             type: Boolean,
             default: false
         },
+        profile: String,
         access_token: String,
         password_changed_at: Date,
         password_reset_token: String,
@@ -47,6 +48,7 @@ const UserSchema = new mongoose.Schema(
 
 // ==================== Password Hashing ====================
 UserSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) return next();
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
     next();

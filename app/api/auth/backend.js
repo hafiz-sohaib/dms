@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const Users = require('../../models/users');
+const Groups = require('../../models/group');
+const Members = require('../../models/member');
 const { errorHandler, generateToken, sendEmail } = require('../../utils/utils');
 
 
@@ -9,19 +11,32 @@ exports.register = async (request, response) => {
     try {
         const user = await Users.create(request.body);
 
-        const mail_data = {
-            from: process.env.EMAIL_ADDRESS,
-            to: user.email,
-            subject: "Credentials",
-            html: `<h1>It's your crendentials</h1>
-            <h3>Username: ${user.email}<h5>
-            <h3>Password: ${request.body.password}</h3>
-            <p>Please visit this url <a href="http://localhost:3500/auth/login">http://localhost:3500/auth/login</a></p>`
-        };
+        if (user) {
+            if (user.role === '¥teacher¥') {
+                const group_1 = await Groups.findOne({ group_name: "Teachers Group" });
+                const group_2 = await Groups.findOne({ group_name: "Students Group" });
 
-        sendEmail(mail_data);
+                await Members.create({ group_id: group_1._id, user_id: user._id});
+                await Members.create({ group_id: group_2._id, user_id: user._id});
+            }
+            else if (user.role === '¥student¥') {
+                const group = await Groups.findOne({ group_name: "Students Group" });
+                await Members.create({ group_id: group._id, user_id: user._id});
+            }
 
-        response.json({message: "Successfully Registered", status: "success"});
+            const mail_data = {
+                from: process.env.EMAIL_ADDRESS,
+                to: user.email,
+                subject: "Credentials",
+                html: `<h1>It's your crendentials</h1>
+                <h3>Username: ${user.email}<h5>
+                <h3>Password: ${request.body.password}</h3>
+                <p>Please visit this url <a href="http://localhost:3500/auth/login">http://localhost:3500/auth/login</a></p>`
+            };
+
+            sendEmail(mail_data);
+            response.json({message: "Successfully Registered", status: "success"});
+        }
     } catch (error) {
         const errors = errorHandler(error, 'users');
         response.json({message: errors, status: 'error'});

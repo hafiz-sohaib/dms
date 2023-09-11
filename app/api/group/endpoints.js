@@ -3,7 +3,6 @@ const { isLoggedin } = require('../../middlewares/authentication');
 const { Router } = require('express');
 const router = Router();
 
-router.post('/chat', isLoggedin, controller.save_chat);
-router.post('/group-chat', isLoggedin, controller.save_group_chat);
+router.post('/group', isLoggedin, controller.create_group);
 
 module.exports = router;
