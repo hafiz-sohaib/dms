@@ -2,7 +2,7 @@ const Exams = require('../../models/exam-duties');
 const { errorHandler } = require('../../utils/utils');
 
 
-// ==================== Add New Teacher ====================
+// ==================== Add New Exam Duty ====================
 exports.set_duty = async (request, response) => {
     try {
         await Exams.create(request.body);
@@ -16,22 +16,25 @@ exports.set_duty = async (request, response) => {
 
 
 
-// ==================== Get Teachers ====================
+
+// ==================== Get Exam Duties ====================
 exports.get_duties = async (request, response) => {
     try {
-        let query = {};
+        const { search, sort, order, ...filters } = request.query;
+        const query = {};
 
-        if (request.query && request.query.search) {
-            query['exam_teacher'] = {$regex: request.query.search, $options: "i"};
-        }else{
-            query = request.query;
+        if (search) {
+            query.exam_teacher = { $regex: search, $options: 'i' };
         }
 
-        const exams = await Exams.find(query);
+        const sortOptions = sort || 'exam_teacher';
+        const sortOrder = order || 'asc';
+
+        const exams = await Exams.find({ ...query, ...filters }).sort({ [sortOptions]: sortOrder === 'desc' ? -1 : 1 }).select('-__v').exec();
         response.json({ exams });
     } catch (error) {
-        console.log(error);
-        response.json({message: "Something Went Wrong", status: "error"});
+        console.error(error);
+        response.json({ message: 'Something Went Wrong', status: 'error' });
     }
 }
 
@@ -39,10 +42,10 @@ exports.get_duties = async (request, response) => {
 
 
 
-// ==================== Add New Teacher ====================
+// ==================== Update Exam Duty ====================
 exports.update_duty = async (request, response) => {
     try {
-        await Exams.findByIdAndUpdate(request.body.exam_id, request.body);
+        await Exams.findByIdAndUpdate(request.params.id, request.body);
         response.json({message: "Duty Successfully Updated", status: "success"});
     } catch (error) {
         const errors = errorHandler(error, 'exam-duties');
@@ -54,10 +57,10 @@ exports.update_duty = async (request, response) => {
 
 
 
-// ==================== Delete Teacher ====================
+// ==================== Delete Exam Duty ====================
 exports.delete_duty = async (request, response) => {
     try {
-        await Exams.findByIdAndDelete(request.body.exam_id);
+        await Exams.findByIdAndDelete(request.params.id);
         response.json({message: "Duty Successfully Deleted", status: "success"});
     } catch (error) {
         console.log(error);

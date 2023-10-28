@@ -24,7 +24,7 @@ exports.get_users = async (request, response) => {
 
 exports.block_user = async (request, response) => {
     try {
-        await Users.findByIdAndUpdate(request.body.id, {isBlocked: true});
+        await Users.findByIdAndUpdate(request.params.id, {isBlocked: true});
         response.json({message: "User Successfully Blocked", status: "success" });
     } catch (error) {
         console.log(error);
@@ -38,7 +38,7 @@ exports.block_user = async (request, response) => {
 
 exports.unblock_user = async (request, response) => {
     try {
-        await Users.findByIdAndUpdate(request.body.id, {isBlocked: false});
+        await Users.findByIdAndUpdate(request.params.id, {isBlocked: false});
         response.json({message: "User Successfully Unblocked", status: "success" });
     } catch (error) {
         console.log(error);

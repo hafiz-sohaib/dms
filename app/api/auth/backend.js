@@ -59,7 +59,7 @@ exports.login = async (request, response) => {
         const token = generateToken(user._id);
         await Users.findByIdAndUpdate(user._id, { access_token: token });
 
-        response.cookie("_dms", token, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000});
+        response.cookie("__dmsToken", token, {httpOnly: true, maxAge: 24 * 60 * 60 * 1000});
         return response.json({message: "Successfully Logged In", status: "success"});
     } catch (error) {
         console.error(error);
@@ -74,11 +74,11 @@ exports.login = async (request, response) => {
 // ==================== User Logout ====================
 exports.logout = async (request, response) => {
     try {
-        const token = request.cookies._dms;
-        if (!token) return response.clearCookie('_dms', { httpOnly: true, secure: true });
+        const token = request.cookies.__dmsToken;
+        if (!token) return response.clearCookie('__dmsToken', { httpOnly: true, secure: true });
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         await Users.findByIdAndUpdate(decoded.id, {access_token: ""});
-        response.clearCookie('_dms', { httpOnly: true, secure: true });
+        response.clearCookie('__dmsToken', { httpOnly: true, secure: true });
         return response.json({message: "Successfully Logged Out", status: "success"});
     } catch (error) {
         console.error(error);
@@ -93,7 +93,7 @@ exports.logout = async (request, response) => {
 // ==================== Rsest Password Token ====================
 exports.reset_password_token = async (request, response) => {
     try {
-        const token = request.cookies._dms;
+        const token = request.cookies.__dmsToken;
         if (token) return response.json({ message: "You can't perform this task because you're now logged in", status: "error" });
 
         const { email } = request.body;
@@ -121,7 +121,7 @@ exports.reset_password = async (request, response) => {
         const { password } = request.body;
         const { token } = request.params;
 
-        const _token = request.cookies._dms;
+        const _token = request.cookies.__dmsToken;
         if (_token) return response.json({ message: "You can't perform this task because you're now logged in", status: "error" });
 
         if (!password) return response.json({ message: "Password is required", status: "error" });

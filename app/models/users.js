@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema(
             required: [true, "Email is required"],
             validate: [isEmail, "Email should be a valid email address"],
             lowercase: [true, "Email should be lowercase"],
-            unique: [true, "Email should be unique"]
+            unique: [true, "This email already registered"]
         },
         password: {
             type: String,
@@ -36,7 +36,7 @@ const UserSchema = new mongoose.Schema(
             type: Boolean,
             default: false
         },
-        profile: String,
+        profile_img: String,
         access_token: String,
         password_changed_at: Date,
         password_reset_token: String,
@@ -46,6 +46,7 @@ const UserSchema = new mongoose.Schema(
 );
 
 
+
 // ==================== Password Hashing ====================
 UserSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
@@ -53,6 +54,7 @@ UserSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, salt);
     next();
 });
+
 
 
 // ==================== Password Matching ====================

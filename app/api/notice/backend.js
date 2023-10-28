@@ -32,19 +32,21 @@ exports.upload_notice = async (request, response) => {
 // ==================== Get Notices ====================
 exports.get_notices = async (request, response) => {
     try {
-        let query = {};
+        const { search, sort, order, ...filters } = request.query;
+        const query = {};
 
-        if (request.query && request.query.search) {
-            query['notice_title'] = {$regex: request.query.search, $options: "i"};
-        }else{
-            query = request.query;
+        if (search) {
+            query.notice_title = { $regex: search, $options: 'i' };
         }
 
-        const notices = await Notices.find(query);
+        const sortOptions = sort || 'notice_title';
+        const sortOrder = order || 'asc';
+
+        const notices = await Notices.find({ ...query, ...filters }).sort({ [sortOptions]: sortOrder === 'desc' ? -1 : 1 }).select('-__v').exec();
         response.json({ notices });
     } catch (error) {
-        console.log(error);
-        response.json({message: "Something Went Wrong", status: "error"});
+        console.error(error);
+        response.json({ message: 'Something Went Wrong', status: 'error' });
     }
 }
 
@@ -55,7 +57,7 @@ exports.get_notices = async (request, response) => {
 // ==================== Delete Notice ====================
 exports.delete_notice = async (request, response) => {
     try {
-        await Notices.findByIdAndDelete(request.body.notice_id);
+        await Notices.findByIdAndDelete(request.params.id);
         response.json({message: "Notice Successfully Deleted", status: "success"});
     } catch (error) {
         console.log(error);

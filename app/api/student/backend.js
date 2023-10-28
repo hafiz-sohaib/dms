@@ -20,19 +20,21 @@ exports.add_student = async (request, response) => {
 // ==================== Get Students ====================
 exports.get_students = async (request, response) => {
     try {
-        let query = {};
+        const { search, sort, order, ...filters } = request.query;
+        const query = {};
 
-        if (request.query && request.query.search) {
-            query['student_name'] = {$regex: request.query.search, $options: "i"};
-        }else{
-            query = request.query;
+        if (search) {
+            query.student_name = { $regex: search, $options: 'i' };
         }
 
-        const students = await Students.find(query);
+        const sortOptions = sort || 'student_name';
+        const sortOrder = order || 'asc';
+
+        const students = await Students.find({ ...query, ...filters }).sort({ [sortOptions]: sortOrder === 'desc' ? -1 : 1 }).select('-__v').exec();
         response.json({ students });
     } catch (error) {
-        console.log(error);
-        response.json({message: "Something Went Wrong", status: "error"});
+        console.error(error);
+        response.json({ message: 'Something Went Wrong', status: 'error' });
     }
 }
 
@@ -43,7 +45,7 @@ exports.get_students = async (request, response) => {
 // ==================== Update Student ====================
 exports.update_student = async (request, response) => {
     try {
-        await Students.findByIdAndUpdate(request.body.student_id, request.body);
+        await Students.findByIdAndUpdate(request.params.id, request.body);
         response.json({ message: "Student Successfully Updated", status: "success" });
     } catch (error) {
         const errors = errorHandler(error, 'students');
@@ -58,7 +60,7 @@ exports.update_student = async (request, response) => {
 // ==================== Delete Student ====================
 exports.delete_student = async (request, response) => {
     try {
-        await Students.findByIdAndDelete(request.body.student_id);
+        await Students.findByIdAndDelete(request.params.id);
         response.json({message: "Student Successfully Deleted", status: "success"});
     } catch (error) {
         console.log(error);

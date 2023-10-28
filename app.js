@@ -3,7 +3,7 @@ require('./app/config/config');
 
 
 // ==================== Import Dependencies ====================
-const { userData } = require('./app/middlewares/authentication');
+const { userData, isLoggedin } = require('./app/middlewares/authentication');
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -29,6 +29,7 @@ app.use(cookieParser());
 
 // ==================== Routes ====================
 app.use('*', userData);
+app.get('/', isLoggedin, (req, res) => res.json({ message: 'okay' }));
 app.use('/student', require('./app/routes/student'));
 app.use('/teacher', require('./app/routes/teacher'));
 app.use('/admin', require('./app/routes/admin'));
