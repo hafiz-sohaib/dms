@@ -1,0 +1,73 @@
+<%- include('../../../layout/header') %>
+
+<style>
+
+.ql-toolbar.ql-snow {
+    border: 1px solid #dee2e6;
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+}
+.ql-container{
+    height: 300px;
+    overflow-y: scroll;
+}
+.ql-container.ql-snow{
+    border: 1px solid #dee2e6;
+}
+
+</style>
+
+
+<div class="card mb-5">
+    <div class="card-body">
+        <form id="opportunity_form">
+            <h5 class="mb-4">Upload Opportunity</h5>
+            <div class="mb-3">
+                <select class="form-select" name="opportunity_batch_year"></select>
+                <div class="text-danger" id="opportunity_batch_year_error"></div>
+            </div>
+            <div class="mb-3">
+                <select class="form-select" name="opportunity_type">
+                    <option value="manual">Manual</option>
+                    <option value="image">Image</option>
+                    <option value="url">URL</option>
+                </select>
+                <div class="text-danger" id="opportunity_title_error"></div>
+            </div>
+            <div class="mb-3">
+                <input type="text" name="opportunity_title" class="form-control" placeholder="Opportunity Title" />
+                <div class="text-danger" id="opportunity_title_error"></div>
+            </div>
+            <div class="mb-3" style="display: none;">
+                <input type="file" class="form-control" name="opportunity_file" />
+                <div class="text-danger" id="opportunity_file_error"></div>
+            </div>
+            <div class="mb-3" style="display: none;">
+                <input type="url" class="form-control" name="opportunity_url" placeholder="Opportunity URL" />
+                <div class="text-danger" id="opportunity_url_error"></div>
+            </div>
+            <div class="mb-4">
+                <div id="editor"></div>
+                <input type="hidden" name="opportunity_content" />
+                <div class="text-danger" id="opportunity_content_error"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload Opportunity</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between mb-5">
+            <h5 class="card-title">Show Notes</h5>
+            <input type="text" id="search_opportunities" class="form-control" style="width: 300px;" placeholder="Search..." />
+        </div>
+        <div id="display_opportunities" class="py-4"></div>
+    </div>
+</div>
+
+
+<%- include('../../../layout/footer') %>
+<script src="/assets/teacher/js/script.js"></script>
+<script src="/pages/teacher/opportunities/opportunities.js"></script>
