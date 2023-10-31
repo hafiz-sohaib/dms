@@ -1,0 +1,194 @@
+<%- include('../../layout/header') %>
+
+<style>
+
+    .user-list a{
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 10px 15px;
+        text-decoration: none;
+        color: #000;
+        font-size: 20px;
+        border-radius: 5px;
+        transition: .3s;
+    }
+    .user-list a:hover{
+        background: #e6e6e6;
+    }
+    .user-list a img{
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-right: 15px;
+    }
+    .user-list a p{
+        margin: 0;
+        line-height: 1.2;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .user-list a p.online{
+        color: var(--bs-success);
+    }
+    .user-list a p.offline{
+        color: var(--bs-danger);
+    }
+    
+    .chat-section,
+    .chat-group-section{
+        display: none;
+    }
+    #chat_container{
+        height: 400px;
+        overflow-y: auto;
+        border-radius: 5px;
+        background: linear-gradient(#eeeeeeac, #eeeeeeac), url('/assets/img/bg.jpeg');
+        margin-bottom: 20px;
+        padding: 20px;
+    }
+    #chat_container .sender{
+        text-align: left;
+        font-size: 17px;
+    }
+    #chat_container .sender p{
+        display: inline-block;
+        max-width: 400px;
+        background: white;
+        padding: 8px 15px;
+        border-radius: 7px;
+        line-height: 1.4;
+    }
+    #chat_container .receiver{
+        text-align: right;
+        font-size: 18px;
+    }
+    #chat_container .receiver p{
+        display: inline-block;
+        max-width: 400px;
+        background: var(--bs-primary);
+        padding: 5px 15px;
+        border-radius: 7px;
+        color: white;
+    }
+
+    #group_chat_container{
+        height: 400px;
+        overflow-y: auto;
+        border-radius: 5px;
+        background: linear-gradient(#eeeeeeac, #eeeeeeac), url('/assets/img/bg.jpeg');
+        margin-bottom: 20px;
+        padding: 20px;
+    }
+    #group_chat_container .sender{
+        text-align: left;
+        font-size: 17px;
+    }
+    #group_chat_container .sender p{
+        display: inline-block;
+        max-width: 400px;
+        background: white;
+        padding: 8px 15px;
+        border-radius: 7px;
+        line-height: 1.4;
+    }
+    #group_chat_container .receiver{
+        text-align: right;
+        font-size: 18px;
+    }
+    #group_chat_container .receiver p{
+        display: inline-block;
+        max-width: 400px;
+        background: var(--bs-primary);
+        padding: 5px 15px;
+        border-radius: 7px;
+        color: white;
+    }
+    
+    </style>
+    
+    <section>
+        <div class="container my-5">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-student-tab" data-bs-toggle="tab" data-bs-target="#nav-student" type="button" role="tab" aria-controls="nav-student" aria-selected="true">Normal Chat</button>
+                    <button class="nav-link" id="nav-teacher-tab" data-bs-toggle="tab" data-bs-target="#nav-teacher" type="button" role="tab" aria-controls="nav-teacher" aria-selected="false">Group Chat</button>
+                </div>
+            </nav>
+            <div class="tab-content pt-5" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-student" role="tabpanel" aria-labelledby="nav-student-tab" tabindex="0">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="user-list">
+                                <% if (users.length > 0) { %>
+                                    <% users.map(list => { %>
+                                        <a href="javascript:void(0)" onclick="open_conversation('<%= list._id %>', '<%= list.full_name %>')">
+                                            <img src="<%= (list.profile) ? `/profile/${list.profile}` : "https://static.vecteezy.com/system/resources/thumbnails/001/840/618/small/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg" %>" alt="" />
+                                            <div>
+                                                <%= list.full_name %>
+                                                <p id="<%= list._id %>-status" class="<%= (list.isOnline === true) ? 'online' : 'offline' %>">
+                                                    <%= (list.isOnline === true) ? "online" : "offline" %>
+                                                </p>
+                                            </div>
+                                        </a>
+                                    <% }) %>
+                                <% } %>
+                            </div>
+                        </div>
+            
+                        <div class="col-lg-9">
+                            <h4 class="start-head mb-3">click to start the chat</h4>
+                            <div class="chat-section">
+                                <div id="chat_container"></div>
+                                <form id="chat_form" class="d-flex">
+                                    <input type="hidden" name="sender_id" value="<%= user._id %>" />
+                                    <input type="hidden" name="receiver_id" />
+                                    <input type="text" name="message" class="form-control me-3" placeholder="Write Message..." required />
+                                    <button type="submit" class="btn btn-primary px-3">Send</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="tab-pane fade" id="nav-teacher" role="tabpanel" aria-labelledby="nav-teacher-tab" tabindex="0">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="user-list">
+                                <% if (groups.length > 0) { %>
+                                    <% groups.map(list => { %>
+                                        <a href="javascript:void(0)" onclick="open_group_conversation('<%= list._id %>', '<%= list.group_name %>', '<%= list.group_about %>')">
+                                            <img src="<%= (list.group_image) ? `/group/${list.group_image}` : "https://static.vecteezy.com/system/resources/thumbnails/001/840/618/small/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg" %>" alt="" />
+                                            <div>
+                                                <%= list.group_name %>
+                                            </div>
+                                        </a>
+                                    <% }) %>
+                                <% } %>
+                            </div>
+                        </div>
+            
+                        <div class="col-lg-9">
+                            <h4 class="start-group-head mb-0">click to start the chat</h4>
+                            <div class="group-about mb-3"></div>
+                            <div class="chat-group-section">
+                                <div id="group_chat_container"></div>
+                                <form id="group_chat_form" class="d-flex">
+                                    <input type="hidden" name="sender_id" value="<%= user._id %>" />
+                                    <input type="hidden" name="group_id" />
+                                    <input type="text" name="message" class="form-control me-3" placeholder="Write Message..." required />
+                                    <button type="submit" class="btn btn-primary px-3">Send</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<%- include('../../layout/footer') %>
+<script src="/assets/student/js/script.js"></script>
+<script src="/student/pages/chat/chat.js"></script>
