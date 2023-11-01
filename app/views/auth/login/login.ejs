@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="icon" href="/assets/img/favicon.ico" />
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <style>
+
+    .login{
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    </style>
+</head>
+<body>
+
+    <section class="login">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mx-auto">
+                    <form id="login_form">
+                        <h2 class="mb-4">Login</h2>
+                        <div class="mb-3">
+                            <input type="text" name="email" class="form-control" placeholder="Email" />
+                        </div>
+                        <div class="mb-4">
+                            <input type="password" name="password" class="form-control" placeholder="Password" />
+                        </div>
+                        <button type="submit" class="btn btn-primary fw-bold">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="success_toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <rect width="100%" height="100%" fill="#00695c"></rect>
+                </svg>
+                <strong class="me-auto">Message</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body"></div>
+        </div>
+    </div>
+
+
+    <script src="/assets/js/jquery.min.js"></script>
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/auth/login/login.js"></script>
+
+</body>
+</html>

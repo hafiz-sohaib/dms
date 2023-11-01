@@ -1,0 +1,16 @@
+<%- include('../../layout/header') %>
+
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between mb-5">
+            <h5 class="card-title">Show Timetables</h5>
+            <input type="text" id="search_timetable" class="form-control" style="width: 300px;" placeholder="Search..." />
+        </div>
+        <div id="display_timetables" class="row py-4"></div>
+    </div>
+</div>
+
+
+<%- include('../../layout/footer') %>
+<script src="/teacher/pages/timetables/timetables.js"></script>

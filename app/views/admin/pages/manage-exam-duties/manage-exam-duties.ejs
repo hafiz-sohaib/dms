@@ -1,0 +1,73 @@
+<%- include('../../layout/header') %>
+
+
+<div class="card bg-light mb-5 shadow-sm">
+    <div class="card-body">
+        <form id="exam_form">
+            <h5 class="mb-4">Set Exam Duties</h5>
+            <div class="row mb-4">
+                <div class="col-4">
+                    <input type="hidden" name="exam_id" />
+                    <select class="form-select" name="exam_teacher"></select>
+                    <div class="text-danger" id="exam_teacher_error"></div>
+                </div>
+                <div class="col-4">
+                    <select class="form-select" name="exam_shift">
+                        <option value="09:00am to 12:00pm">09:00am to 12:00pm</option>
+                        <option value="12:00pm to 03:00pm">12:00pm to 03:00pm</option>
+                    </select>
+                    <div class="text-danger" id="exam_shift_error"></div>
+                </div>
+                <div class="col-4">
+                    <select class="form-select" name="exam_room">
+                        <option value="Room A">Room A</option>
+                        <option value="Room B">Room B</option>
+                        <option value="Room C">Room C</option>
+                    </select>
+                    <div class="text-danger" id="exam_room_error"></div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Set Duty</button>
+        </form>
+    </div>
+</div>
+
+
+<div class="card bg-light shadow-sm">
+    <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between mb-5">
+            <h5 class="card-title">Show Exam Duties</h5>
+            <div class="row" style="width: 390px;">
+                <div class="col-8 ps-0">
+                    <input type="text" id="search_duty" class="form-control" placeholder="Search duty via name..." style="width: 250px;" />
+                </div>
+                <div class="col-4 ps-0">
+                    <select id="reorder_duty" class="form-select">
+                        <option selected disabled>Order By</option>
+                        <option value="asc">A-Z</option>
+                        <option value="desc">Z-A</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="text-center">
+                        <th>#</th>
+                        <th>Teacher Name</th>
+                        <th>Exam timing</th>
+                        <th>Classroom</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider" id="display_duties"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<%- include('../../layout/footer') %>
+<script src="/admin/pages/manage-exam-duties/manage-exam-duties.js"></script>
